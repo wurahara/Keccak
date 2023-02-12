@@ -23,24 +23,24 @@ private:
     std::array<uint64_t, SHA3::SPONGE_WORDS> state;
 
 public:
-    explicit SHA3(uint8_t flag = 0);
-    void update(const void *buf_in, size_t length);
-    std::array<uint64_t, SHA3::SPONGE_WORDS> finalize();
+    constexpr explicit SHA3(uint8_t flag = 0);
+    constexpr void update(const void *buf_in, size_t length);
+    constexpr std::array<uint64_t, SHA3::SPONGE_WORDS> finalize();
 
 public:
-    static std::array<uint64_t, SHA3::SPONGE_WORDS> hash_buffer(const void *buf_in, uint32_t length, int flag);
+    constexpr static std::array<uint64_t, SHA3::SPONGE_WORDS> hash_buffer(const void *buf_in, uint32_t length, int flag);
 };
 
 template<size_t BIT>
 requires (BIT == 256 || BIT == 384 || BIT == 512)
-SHA3<BIT>::SHA3(uint8_t flag)
+constexpr SHA3<BIT>::SHA3(uint8_t flag)
         : saved{0}, byte_index{0}, word_index{0}, capacity_words{2 * BIT / (8 * sizeof(uint64_t))}, state{} {
     this->capacity_words |= (flag == 1 ? util::USE_KECCAK_FLAG : 0);
 }
 
 template<size_t BIT>
 requires (BIT == 256 || BIT == 384 || BIT == 512)
-void SHA3<BIT>::update(const void *buf_in, size_t length) {
+constexpr void SHA3<BIT>::update(const void *buf_in, size_t length) {
     uint32_t old_tail = (8 - this->byte_index) & 7;
 
     size_t words;
@@ -98,7 +98,7 @@ void SHA3<BIT>::update(const void *buf_in, size_t length) {
 
 template<size_t BIT>
 requires (BIT == 256 || BIT == 384 || BIT == 512)
-std::array<uint64_t, SHA3<BIT>::SPONGE_WORDS> SHA3<BIT>::finalize() {
+constexpr std::array<uint64_t, SHA3<BIT>::SPONGE_WORDS> SHA3<BIT>::finalize() {
     uint64_t t;
     if (this->capacity_words & util::USE_KECCAK_FLAG) {
         t = static_cast<uint64_t>((static_cast<uint64_t>(1) << (this->byte_index * 8)));
@@ -114,7 +114,7 @@ std::array<uint64_t, SHA3<BIT>::SPONGE_WORDS> SHA3<BIT>::finalize() {
 template<size_t BIT>
 requires (BIT == 256 || BIT == 384 || BIT == 512)
 std::array<uint64_t, SHA3<BIT>::SPONGE_WORDS>
-SHA3<BIT>::hash_buffer(const void *buf_in, uint32_t length, int flag) {
+constexpr SHA3<BIT>::hash_buffer(const void *buf_in, uint32_t length, int flag) {
     SHA3<BIT> sha3(flag);
     sha3.update(buf_in, length);
     return sha3.finalize();
