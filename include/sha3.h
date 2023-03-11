@@ -4,9 +4,8 @@
 #include <array>
 #include <cassert>
 #include <cstdint>
-#include <variant>
 
-#include "util.h"
+#include "core.h"
 
 namespace keccak {
 

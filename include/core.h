@@ -1,5 +1,5 @@
-#ifndef KECCAK_UTIL_H
-#define KECCAK_UTIL_H
+#ifndef KECCAK_CORE_H
+#define KECCAK_CORE_H
 
 #include <array>
 #include <cstdint>
@@ -74,4 +74,4 @@ constexpr inline void keccak_f(std::array<uint64_t, util::P_LEN> &state) {
 
 } // namespace keccak::util
 
-#endif //KECCAK_UTIL_H
+#endif //KECCAK_CORE_H

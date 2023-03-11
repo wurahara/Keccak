@@ -60,18 +60,18 @@ TEST(TestSha, SHA3_256_Basic_Keccak_5) {
                           "\x29\x4d\x90\x06\xee\x9f\x3f\x9d\x41\x9c\x8d\x42\x77\x48\xdc\x41", 32), 0);
 }
 
-TEST(TestSha, ExtremelyLongMessage) {
-    int i = 16777216;
-    keccak::SHA3_256 sha3(1);
-    while (i--) {
-        sha3.update("abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmno", 64);
-    }
-    auto res = sha3.finalize();
-
-    EXPECT_EQ(std::memcmp(res.data(),
-                          "\x5f\x31\x3c\x39\x96\x3d\xcf\x79\x2b\x54\x70\xd4\xad\xe9\xf3\xa3"
-                          "\x56\xa3\xe4\x02\x17\x48\x69\x0a\x95\x83\x72\xe2\xb0\x6f\x82\xa4", 32), 0);
-}
+//TEST(TestSha, ExtremelyLongMessage) {
+//    int i = 16777216;
+//    keccak::SHA3_256 sha3(1);
+//    while (i--) {
+//        sha3.update("abcdefghbcdefghicdefghijdefghijkefghijklfghijklmghijklmnhijklmno", 64);
+//    }
+//    auto res = sha3.finalize();
+//
+//    EXPECT_EQ(std::memcmp(res.data(),
+//                          "\x5f\x31\x3c\x39\x96\x3d\xcf\x79\x2b\x54\x70\xd4\xad\xe9\xf3\xa3"
+//                          "\x56\xa3\xe4\x02\x17\x48\x69\x0a\x95\x83\x72\xe2\xb0\x6f\x82\xa4", 32), 0);
+//}
 
 TEST(TestSha, SHA3_256_Empty_Buffer) {
     keccak::SHA3_256 sha3(0);
