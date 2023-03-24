@@ -1,13 +1,17 @@
-#ifndef KECCAK_CORE_H
-#define KECCAK_CORE_H
+#ifndef KECCAK_KECCAK_H
+#define KECCAK_KECCAK_H
 
 #include <array>
 #include <cstdint>
 
-namespace keccak::util {
+/**
+ * @brief The keccak sponge function.
+ */
+namespace keccak::core {
 
 constexpr size_t P_LEN = 25;
 
+/// The flag to use pure keccak instead of NIST-SHA3.
 constexpr uint64_t USE_KECCAK_FLAG = 0x80000000;
 
 constexpr inline uint64_t cw(uint64_t x) {
@@ -39,7 +43,12 @@ constexpr uint32_t pi[24] = {
         12, 2, 20, 14, 22, 9, 6, 1,
 };
 
-constexpr inline void keccak_f(std::array<uint64_t, util::P_LEN> &state) {
+/**
+ * @brief The keccak sponge function.
+ * @param state The state to operate on.
+ * @return The state after the keccak function has been applied.
+ */
+constexpr inline void keccak_p(std::array<uint64_t, core::P_LEN> &state) {
     uint64_t temp, bc[5];
 
     for (uint64_t round: round_constants) {
@@ -74,4 +83,4 @@ constexpr inline void keccak_f(std::array<uint64_t, util::P_LEN> &state) {
 
 } // namespace keccak::util
 
-#endif //KECCAK_CORE_H
+#endif //KECCAK_KECCAK_H
